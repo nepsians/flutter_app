@@ -9,14 +9,24 @@ Reducer<WeatherState> weatherStateReducer = combineReducers<WeatherState>([
 ]);
 
 WeatherState _loading(WeatherState weatherState, WeatherLoading action) {
-  return weatherState.copyWith(isLoading: true, weatherError: false);
+  return weatherState.copyWith(
+    isLoading: true,
+    weatherError: false,
+  );
 }
 
 WeatherState _success(WeatherState weatherState, WeatherSuccess action) {
   return weatherState.copyWith(
-      isLoading: false, weatherError: false, weather: action.weather);
+    isLoading: false,
+    weatherError: false,
+    weather: action.weather,
+  );
 }
 
 WeatherState _error(WeatherState weatherState, WeatherError action) {
-  return weatherState.copyWith(isLoading: false, weatherError: true);
+  return weatherState.copyWith(
+    isLoading: false,
+    weatherError: true,
+    errorMsg: action.errorMsg,
+  );
 }
