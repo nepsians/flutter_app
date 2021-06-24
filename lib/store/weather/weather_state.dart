@@ -6,11 +6,14 @@ class WeatherState {
   final Weather weather;
   final bool isWeatherLoading;
   final bool weatherError;
+  final String? errorMsg;
 
-  WeatherState(
-      {required this.weather,
-      required this.isWeatherLoading,
-      required this.weatherError});
+  WeatherState({
+    this.errorMsg,
+    required this.weather,
+    required this.isWeatherLoading,
+    required this.weatherError,
+  });
 
   factory WeatherState.intial() => WeatherState(
         weather: Weather(),
@@ -18,13 +21,17 @@ class WeatherState {
         weatherError: false,
       );
 
-  WeatherState copyWith(
-      {bool isLoading = false,
-      Weather weather = const Weather(),
-      bool weatherError = false}) {
+  WeatherState copyWith({
+    bool? isLoading,
+    Weather? weather,
+    bool? weatherError,
+    String? errorMsg,
+  }) {
     return WeatherState(
-        weather: this.weather,
-        isWeatherLoading: this.isWeatherLoading,
-        weatherError: this.weatherError);
+      weather: weather ?? this.weather,
+      isWeatherLoading: isLoading ?? this.isWeatherLoading,
+      weatherError: weatherError ?? this.weatherError,
+      errorMsg: errorMsg ?? this.errorMsg,
+    );
   }
 }
