@@ -20,9 +20,9 @@ class Weather {
   final Temperature maxTemperature;
   final Temperature minTemperature;
 
-  final List<Weather> forecast;
+  List<Weather> forecast = [];
 
-  const Weather({
+  Weather({
     this.id = 0,
     this.time = 0,
     this.sunrise = 0,
@@ -36,7 +36,6 @@ class Weather {
     this.temperature = const Temperature(0),
     this.maxTemperature = const Temperature(0),
     this.minTemperature = const Temperature(0),
-    this.forecast = const [],
   });
 
   static Weather fromJson(Map<String, dynamic> json) {
@@ -55,7 +54,6 @@ class Weather {
       sunset: json['sys']['sunset'],
       humidity: json['main']['humidity'],
       windSpeed: intToDouble(json['wind']['speed']),
-      forecast: [],
     );
   }
 

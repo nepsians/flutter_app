@@ -9,11 +9,21 @@ class WeatherApiProvider extends BaseApiProvider {
   Future<Weather> getWeather({String cityName = ""}) async {
     final url =
         '$baseUrl/data/2.5/weather?q=$cityName&appid=${ApiKey.weatherKey}';
+    final foreCastUrl =
+        '$baseUrl/data/2.5/forecast?q=$cityName&appid=${ApiKey.weatherKey}';
 
     try {
       final response = await dio.get(url);
+      final foreCastResponse = await dio.get(foreCastUrl);
 
-      return Weather.fromJson(response.data);
+      final List<Weather> forecasts =
+          Weather.fromForecastJson(foreCastResponse.data);
+
+      Weather weather = Weather.fromJson(response.data);
+
+      weather.forecast = forecasts;
+
+      return weather;
     } on DioError catch (e) {
       throw e;
     }

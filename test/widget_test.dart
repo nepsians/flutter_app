@@ -6,10 +6,10 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screens/app.dart';
 import 'package:flutter_app/store/app/store.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_app/main.dart';
 import 'package:redux/redux.dart';
 
 void main() {

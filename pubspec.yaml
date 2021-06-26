@@ -32,6 +32,9 @@ dependencies:
   dio: ^4.0.0
   redux_persist_flutter: ^0.9.0
   provider: ^5.0.0
+  intl: ^0.17.0
+  equatable: ^2.0.3
+  flutter_swiper:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -69,12 +72,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: WeatherIcons
+      fonts:
+        - asset: fonts/weathericons-regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

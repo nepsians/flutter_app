@@ -1,8 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_app/models/weather_model.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-class WeatherState {
+class WeatherState extends Equatable {
   final Weather weather;
   final bool isWeatherLoading;
   final bool weatherError;
@@ -34,4 +35,8 @@ class WeatherState {
       errorMsg: errorMsg ?? this.errorMsg,
     );
   }
+
+  @override
+  List<Object?> get props =>
+      [weather, isWeatherLoading, errorMsg, weatherError];
 }
