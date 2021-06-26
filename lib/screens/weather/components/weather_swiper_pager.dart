@@ -16,12 +16,14 @@ class WeatherSwiperPager extends StatelessWidget {
       height: 300,
       child: Swiper(
         itemCount: 2,
-        index: 0,
+        index: 1,
         itemBuilder: (context, index) {
           if (index == 0) {
             return CurrentWeather(weather: weather);
           } else if (index == 1) {
-            return TemperatureChart();
+            return TemperatureChart(
+              weathers: this.weather.forecast,
+            );
           }
           return SizedBox();
         },
