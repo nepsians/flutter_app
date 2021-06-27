@@ -1,6 +1,6 @@
 ## About
 
-Flutter Weather App
+Flutter Weather App using Redux Architecture.
 
 ## Demo
 
