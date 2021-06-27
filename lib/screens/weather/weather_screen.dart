@@ -10,14 +10,18 @@ import 'components/body.dart';
 
 enum OptionsMenu { changeCity, settings }
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
   static final routeName = "/weather_screen";
 
   const WeatherScreen({Key? key}) : super(key: key);
 
   @override
+  _WeatherScreenState createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  @override
   Widget build(BuildContext context) {
-    print("rerender");
     return Scaffold(
       appBar: AppBar(
         title: appBarText(context),
@@ -25,14 +29,7 @@ class WeatherScreen extends StatelessWidget {
           popUpItem(),
         ],
       ),
-      backgroundColor: Colors.white,
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: WeatherBody(),
-      ),
+      body: WeatherBody(),
     );
   }
 

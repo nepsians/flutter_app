@@ -38,8 +38,6 @@ ThunkAction<AppState> fetchWeatherAction(context) {
       final weatherResponse =
           await weatherRepository.getWeather(cityName: "lalitpur");
 
-      await Future.delayed(const Duration(milliseconds: 3000));
-
       store.dispatch(WeatherSuccess(weatherResponse, false));
     } on DioError catch (e) {
       if (e.response?.data["message"] != null) {

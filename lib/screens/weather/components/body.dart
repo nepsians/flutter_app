@@ -14,6 +14,7 @@ class WeatherBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).primaryColor,
       child: StoreConnector<AppState, WeatherFormViewModal>(
         onInit: (store) {
           store.dispatch(fetchWeatherAction(context));
@@ -25,7 +26,9 @@ class WeatherBody extends StatelessWidget {
 
           if (weatherState.isWeatherLoading) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Theme.of(context).accentColor.withAlpha(90),
+              ),
             );
           }
 
