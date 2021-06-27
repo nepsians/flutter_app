@@ -16,7 +16,7 @@ class WeatherSwiperPager extends StatelessWidget {
       height: 300,
       child: Swiper(
         itemCount: 2,
-        index: 1,
+        index: 0,
         itemBuilder: (context, index) {
           if (index == 0) {
             return CurrentWeather(weather: weather);

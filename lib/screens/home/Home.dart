@@ -26,13 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: bottomNavBar(context),
     );
   }
