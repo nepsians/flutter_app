@@ -14,29 +14,45 @@ class WeatherBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: StoreConnector<AppState, WeatherFormViewModal>(
-        onInit: (store) {
-          store.dispatch(fetchWeatherAction(context));
-        },
-        distinct: true,
-        converter: (store) => WeatherFormViewModal.fromStore(store),
-        builder: (context, viewModal) {
-          final WeatherState weatherState = viewModal.weather;
+      constraints: BoxConstraints.expand(),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+      ),
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) =>
+            SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight,
+            ),
+            child: StoreConnector<AppState, WeatherFormViewModal>(
+              onInit: (store) {
+                store.dispatch(fetchWeatherAction(context));
+              },
+              distinct: true,
+              converter: (store) => WeatherFormViewModal.fromStore(store),
+              builder: (context, viewModal) {
+                final WeatherState weatherState = viewModal.weather;
 
-          if (weatherState.isWeatherLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+                if (weatherState.isWeatherLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).accentColor.withAlpha(90),
+                    ),
+                  );
+                }
 
-          if (weatherState.weatherError) {
-            return Center(
-              child: Text(weatherState.errorMsg ?? ""),
-            );
-          }
+                if (weatherState.weatherError) {
+                  return Center(
+                    child: Text(weatherState.errorMsg?.toUpperCase() ?? ""),
+                  );
+                }
 
-          return MainWeatherContainer(weather: weatherState.weather);
-        },
+                return MainWeatherContainer(weather: weatherState.weather);
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

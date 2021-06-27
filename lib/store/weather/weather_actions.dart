@@ -29,16 +29,15 @@ class WeatherError extends WeatherAction {
   });
 }
 
-ThunkAction<AppState> fetchWeatherAction(context) {
+ThunkAction<AppState> fetchWeatherAction(context, {String? cityName}) {
   return (Store<AppState> store) async {
-    final weatherRepository = Provider.of<WeatherRepository>(context);
+    final weatherRepository =
+        Provider.of<WeatherRepository>(context, listen: false);
 
     store.dispatch(WeatherLoading());
     try {
       final weatherResponse =
-          await weatherRepository.getWeather(cityName: "lalitpur");
-
-      await Future.delayed(const Duration(milliseconds: 3000));
+          await weatherRepository.getWeather(cityName: cityName ?? "lalitpur");
 
       store.dispatch(WeatherSuccess(weatherResponse, false));
     } on DioError catch (e) {

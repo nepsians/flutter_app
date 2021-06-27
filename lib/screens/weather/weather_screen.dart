@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/store/app/app_state.dart';
-import 'package:flutter_app/store/theme/store.dart';
-import 'package:flutter_app/theme/theme.dart';
+import 'package:flutter_app/store/weather/weather_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
@@ -10,14 +9,20 @@ import 'components/body.dart';
 
 enum OptionsMenu { changeCity, settings }
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
   static final routeName = "/weather_screen";
 
   const WeatherScreen({Key? key}) : super(key: key);
 
   @override
+  _WeatherScreenState createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  String _cityName = "";
+
+  @override
   Widget build(BuildContext context) {
-    print("rerender");
     return Scaffold(
       appBar: AppBar(
         title: appBarText(context),
@@ -25,14 +30,7 @@ class WeatherScreen extends StatelessWidget {
           popUpItem(),
         ],
       ),
-      backgroundColor: Colors.white,
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: WeatherBody(),
-      ),
+      body: WeatherBody(),
     );
   }
 
@@ -50,10 +48,6 @@ class WeatherScreen extends StatelessWidget {
           PopupMenuItem<OptionsMenu>(
             value: OptionsMenu.changeCity,
             child: Text("Change city"),
-          ),
-          PopupMenuItem<OptionsMenu>(
-            value: OptionsMenu.settings,
-            child: Text("Settings"),
           ),
         ],
       ),
@@ -75,17 +69,59 @@ class WeatherScreen extends StatelessWidget {
   _onMenuItemPressed(OptionsMenu item, Store store) {
     switch (item) {
       case OptionsMenu.changeCity:
-        print("Change city clicked");
-        store.dispatch(ChangeTheme(themeCode: Themes.LIGHT_THEME_CODE));
+        _showDialog(store: store);
 
         break;
 
-      case OptionsMenu.settings:
-        print("Settings pressed");
-        store.dispatch(ChangeTheme(themeCode: Themes.DARK_THEME_CODE));
-
-        break;
       default:
     }
+  }
+
+  _showDialog({required Store store}) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text(
+          "Change city",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text(
+              'Search',
+              style: TextStyle(color: Colors.black, fontSize: 14),
+            ),
+            style: ElevatedButton.styleFrom(primary: Colors.white),
+            onPressed: () {
+              store.dispatch(fetchWeatherAction(context, cityName: _cityName));
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+        content: TextField(
+          autofocus: true,
+          onChanged: (text) {
+            _cityName = text;
+          },
+          decoration: InputDecoration(
+            hintText: 'Enter city name',
+            hintStyle: TextStyle(color: Colors.grey),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+            ),
+          ),
+          style: TextStyle(color: Colors.black),
+          cursorColor: Colors.black,
+        ),
+      ),
+    );
   }
 }
